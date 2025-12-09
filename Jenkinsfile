@@ -20,6 +20,7 @@ pipeline {
                 bat 'docker run --rm calculator-app'
             }
         }
+
         stage('Check AWS & SAM') {
             steps {
                 bat 'aws --version'
@@ -27,6 +28,17 @@ pipeline {
             }
         }
 
+        stage('SAM Build (Package for AWS)') {
+            steps {
+                bat 'sam build'
+            }
+        }
+
+        stage('Deploy to AWS (CD)') {
+            steps {
+                bat 'sam deploy --no-confirm-changeset --no-fail-on-empty-changeset'
+            }
+        }
     }
 }
 
