@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Simple calculator app deployed as AWS Lambda via SAM
+
+Resources:
+  CalculatorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: app.lambda_handler
+      Runtime: python3.13
+      Timeout: 5
+      MemorySize: 128
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /calculate
+            Method: get
+
+Outputs:
+  ApiUrl:
+    Description: "Invoke URL for the calculator endpoint"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/calculate"
