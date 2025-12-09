@@ -20,6 +20,13 @@ pipeline {
                 bat 'docker run --rm calculator-app'
             }
         }
+        stage('Check AWS & SAM') {
+            steps {
+                bat 'aws --version'
+                bat 'sam --version'
+            }
+        }
+
     }
 }
 
